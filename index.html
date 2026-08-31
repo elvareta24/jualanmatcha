@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchaGo - Pesan Matcha Favoritmu</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f7f2;
+            color: #24351f;
+        }
+
+        /* HEADER */
+        header {
+            background: #174d2b;
+            color: white;
+            padding: 16px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #a9d18e;
+        }
+
+        .cart-button {
+            background: #8bc34a;
+            color: #173d22;
+            border: none;
+            padding: 11px 17px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 430px;
+            padding: 60px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #e4f0dc, #f8fbf5);
+        }
+
+        .hero-text {
+            max-width: 570px;
+        }
+
+        .hero-text small {
+            color: #4d8b3d;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .hero-text h1 {
+            font-size: 52px;
+            line-height: 1.05;
+            margin: 15px 0;
+            color: #174d2b;
+        }
+
+        .hero-text p {
+            color: #63705e;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .order-now {
+            background: #174d2b;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .hero-matcha {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #d8edb8, #72a64e 60%, #3f7137);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 120px;
+            box-shadow: 0 25px 45px rgba(54, 91, 44, 0.25);
+        }
+
+        /* MENU */
+        .menu-section {
+            padding: 55px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            color: #174d2b;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #71806c;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+            transition: 0.25s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.11);
+        }
+
+        .menu-image {
+            height: 190px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 75px;
+            background: #e7f1df;
+        }
+
+        .menu-info {
+            padding: 18px;
+        }
+
+        .menu-info h3 {
+            margin-bottom: 7px;
+            color: #244f2b;
+        }
+
+        .menu-info p {
+            font-size: 13px;
+            color: #778172;
+            min-height: 38px;
+            line-height: 1.4;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #174d2b;
+        }
+
+        .add-button {
+            border: none;
+            background: #174d2b;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* PROMO */
+        .promo {
+            margin: 0 7% 55px;
+            padding: 28px 35px;
+            border-radius: 18px;
+            background: #174d2b;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo h3 {
+            font-size: 23px;
+            margin-bottom: 7px;
+        }
+
+        .promo p {
+            color: #d6e5d0;
+        }
+
+        .promo-code {
+            background: #8bc34a;
+            color: #173d22;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #123b21;
+            color: #dce9d8;
+            padding: 30px 7%;
+            text-align: center;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* CART */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            display: none;
+            z-index: 200;
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
+        .cart {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 420px;
+            max-width: 100%;
+            height: 100%;
+            background: white;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .cart-header h2 {
+            color: #174d2b;
+        }
+
+        .close-cart {
+            border: none;
+            background: #eee;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: #e7f1df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 7px;
+        }
+
+        .quantity button {
+            width: 25px;
+            height: 25px;
+            border: none;
+            background: #e1ecd9;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            margin-top: 25px;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .grand-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #174d2b;
+        }
+
+        .checkout {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #174d2b;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #888;
+            padding: 50px 10px;
+        }
+
+        /* PAYMENT MODAL */
+        .payment-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: 20px;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-box {
+            width: 440px;
+            max-width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+        }
+
+        .payment-box h2 {
+            color: #174d2b;
+            margin-bottom: 7px;
+        }
+
+        .payment-box > p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            border: 2px solid #e5e5e5;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .payment-option:hover,
+        .payment-option.selected {
+            border-color: #69a542;
+            background: #f2f8ed;
+        }
+
+        .payment-icon {
+            font-size: 25px;
+        }
+
+        .confirm-payment {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            background: #174d2b;
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .cancel-payment {
+            width: 100%;
+            border: none;
+            padding: 12px;
+            background: #eee;
+            color: #333;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                text-align: center;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 42px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            header {
+                padding: 14px 5%;
+            }
+
+            .hero,
+            .menu-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-matcha {
+                width: 210px;
+                height: 210px;
+                font-size: 90px;
+            }
+
+            .promo {
+                margin-left: 5%;
+                margin-right: 5%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🍵 Matcha<span>Go</span></div>
+
+    <button class="cart-button" onclick="openCart()">
+        🛒 Keranjang (<span id="cartCount">0</span>)
+    </button>
+</header>
+
+<section class="hero">
+    <div class="hero-text">
+        <small>🌿 MATCHA PREMIUM SETIAP HARI</small>
+        <h1>Matcha enak,<br>mood naik.</h1>
+        <p>
+            Nikmati matcha premium dengan rasa creamy,
+            fresh, dan dibuat khusus untuk menemani harimu.
+        </p>
+
+        <button class="order-now" onclick="scrollToMenu()">
+            Pesan Sekarang →
+        </button>
+    </div>
+
+    <div class="hero-matcha">
+        🍵
+    </div>
+</section>
+
+<section class="menu-section" id="menu">
+
+    <div class="section-title">
+        <h2>Menu Matcha</h2>
+        <p>Pilih minuman favoritmu dan masukkan ke keranjang.</p>
+    </div>
+
+    <div class="menu-grid">
+
+        <div class="menu-card">
+            <div class="menu-image">🍵</div>
+
+            <div class="menu-info">
+                <h3>Matcha Latte</h3>
+                <p>Matcha premium creamy dengan susu segar.</p>
+
+                <div class="price-row">
+                    <span class="price">Rp25.000</span>
+                    <button class="add-button"
+                        onclick="addToCart('Matcha Latte', 25000, '🍵')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-image">🥤</div>
+
+            <div class="menu-info">
+                <h3>Strawberry Matcha</h3>
+                <p>Perpaduan strawberry manis dan matcha creamy.</p>
+
+                <div class="price-row">
+                    <span class="price">Rp30.000</span>
+                    <button class="add-button"
+                        onclick="addToCart('Strawberry Matcha', 30000, '🥤')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-image">🍓</div>
+
+            <div class="menu-info">
+                <h3>Berry Matcha</h3>
+                <p>Matcha dengan sensasi berry yang fresh.</p>
+
+                <div class="price-row">
+                    <span class="price">Rp28.000</span>
+                    <button class="add-button"
+                        onclick="addToCart('Berry Matcha', 28000, '🍓')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-image">🍫</div>
+
+            <div class="menu-info">
+                <h3>Choco Matcha</h3>
+                <p>Matcha premium dipadukan dengan cokelat.</p>
+
+                <div class="price-row">
+                    <span class="price">Rp29.000</span>
+                    <button class="add-button"
+                        onclick="addToCart('Choco Matcha', 29000, '🍫')">+</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="promo">
+    <div>
+        <h3>🎉 Promo Hari Ini!</h3>
+        <p>Gratis ongkir untuk pembelian minimal Rp50.000.</p>
+    </div>
+
+    <div class="promo-code">
+        MATCHAHEMAT
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 <strong>MatchaGo</strong> — Fresh Matcha, Happy Day 🍵</p>
+</footer>
+
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay">
+
+    <div class="cart">
+
+        <div class="cart-header">
+            <h2>🛒 Keranjang</h2>
+
+            <button class="close-cart" onclick="closeCart()">✕</button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="cart-total">
+
+            <div class="total-row">
+                <span>Subtotal</span>
+                <span id="subtotal">Rp0</span>
+            </div>
+
+            <div class="total-row">
+                <span>Biaya layanan</span>
+                <span id="serviceFee">Rp2.000</span>
+            </div>
+
+            <div class="total-row grand-total">
+                <span>Total</span>
+                <span id="total">Rp2.000</span>
+            </div>
+
+            <button class="checkout" onclick="openPayment()">
+                Lanjut Pembayaran
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- PAYMENT -->
+<div class="payment-modal" id="paymentModal">
+
+    <div class="payment-box">
+
+        <h2>💳 Pembayaran</h2>
+        <p>Pilih metode pembayaran yang kamu inginkan.</p>
+
+        <div class="payment-option" onclick="selectPayment(this, 'GoPay')">
+            <span class="payment-icon">🟢</span>
+            <div>
+                <strong>GoPay</strong>
+                <br>
+                <small>Bayar menggunakan GoPay</small>
+            </div>
+        </div>
+
+        <div class="payment-option" onclick="selectPayment(this, 'QRIS')">
+            <span class="payment-icon">▣</span>
+            <div>
+                <strong>QRIS</strong>
+                <br>
+                <small>Scan QR untuk membayar</small>
+            </div>
+        </div>
+
+        <div class="payment-option" onclick="selectPayment(this, 'COD')">
+            <span class="payment-icon">💵</span>
+            <div>
+                <strong>COD</strong>
+                <br>
+                <small>Bayar ketika pesanan sampai</small>
+            </div>
+        </div>
+
+        <button class="confirm-payment" onclick="confirmPayment()">
+            Konfirmasi Pesanan
+        </button>
+
+        <button class="cancel-payment" onclick="closePayment()">
+            Kembali
+        </button>
+
+    </div>
+</div>
+
+
+<script>
+
+    let cart = [];
+    let selectedPayment = "";
+
+    function formatRupiah(number) {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0
+        }).format(number);
+    }
+
+    function addToCart(name, price, icon) {
+
+        const existing = cart.find(item => item.name === name);
+
+        if (existing) {
+            existing.qty++;
+        } else {
+            cart.push({
+                name: name,
+                price: price,
+                icon: icon,
+                qty: 1
+            });
+        }
+
+        updateCart();
+
+        alert(name + " berhasil ditambahkan ke keranjang!");
+    }
+
+    function updateCart() {
+
+        const cartItems = document.getElementById("cartItems");
+
+        let totalQty = 0;
+        let subtotal = 0;
+
+        cartItems.innerHTML = "";
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML = `
+                <div class="empty-cart">
+                    <div style="font-size:50px;">🛒</div>
+                    <p>Keranjang masih kosong.</p>
+                </div>
+            `;
+
+        } else {
+
+            cart.forEach((item, index) => {
+
+                totalQty += item.qty;
+                subtotal += item.price * item.qty;
+
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+
+                        <div class="cart-item-icon">
+                            ${item.icon}
+                        </div>
+
+                        <div class="cart-item-info">
+
+                            <h4>${item.name}</h4>
+
+                            <small>
+                                ${formatRupiah(item.price)}
+                            </small>
+
+                            <div class="quantity">
+
+                                <button onclick="changeQty(${index}, -1)">
+                                    −
+                                </button>
+
+                                <span>${item.qty}</span>
+
+                                <button onclick="changeQty(${index}, 1)">
+                                    +
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <strong>
+                            ${formatRupiah(item.price * item.qty)}
+                        </strong>
+
+                    </div>
+                `;
+            });
+        }
+
+        const serviceFee = 2000;
+        const total = subtotal + serviceFee;
+
+        document.getElementById("cartCount").innerText = totalQty;
+        document.getElementById("subtotal").innerText = formatRupiah(subtotal);
+        document.getElementById("serviceFee").innerText = formatRupiah(serviceFee);
+        document.getElementById("total").innerText = formatRupiah(total);
+    }
+
+    function changeQty(index, amount) {
+
+        cart[index].qty += amount;
+
+        if (cart[index].qty <= 0) {
+            cart.splice(index, 1);
+        }
+
+        updateCart();
+    }
+
+    function openCart() {
+        document.getElementById("cartOverlay").classList.add("active");
+    }
+
+    function closeCart() {
+        document.getElementById("cartOverlay").classList.remove("active");
+    }
+
+    function openPayment() {
+
+        if (cart.length === 0) {
+            alert("Keranjang masih kosong!");
+            return;
+        }
+
+        document.getElementById("paymentModal").classList.add("active");
+    }
+
+    function closePayment() {
+        document.getElementById("paymentModal").classList.remove("active");
+    }
+
+    function selectPayment(element, method) {
+
+        document.querySelectorAll(".payment-option").forEach(option => {
+            option.classList.remove("selected");
+        });
+
+        element.classList.add("selected");
+
+        selectedPayment = method;
+    }
+
+    function confirmPayment() {
+
+        if (!selectedPayment) {
+            alert("Silakan pilih metode pembayaran terlebih dahulu.");
+            return;
+        }
+
+        const total = cart.reduce(
+            (sum, item) => sum + item.price * item.qty,
+            2000
+        );
+
+        alert(
+            "Pesanan berhasil dibuat! 🎉\n\n" +
+            "Metode pembayaran: " + selectedPayment + "\n" +
+            "Total: " + formatRupiah(total) + "\n\n" +
+            "Terima kasih sudah membeli MatchaGo 🍵"
+        );
+
+        cart = [];
+        selectedPayment = "";
+
+        updateCart();
+        closePayment();
+        closeCart();
+    }
+
+    function scrollToMenu() {
+        document.getElementById("menu").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    updateCart();
+
+</script>
+
+</body>
+</html>
