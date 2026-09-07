@@ -3,108 +3,766 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matcha-Jek | Pesan Antar Matcha</title>
+    <title>MatchaGo - Pesan Matcha</title>
+
     <style>
-        /* Pengaturan Dasar & Gaya Mobile */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 480px; /* Ukuran layar HP */
-            background-color: #ffffff;
-            min-height: 100vh;
-            position: relative;
-            padding-bottom: 80px; /* Ruang untuk tombol keranjang */
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
-        /* Bagian Header (Warna Hijau ala Gojek/Matcha) */
-        .header {
-            background-color: #00aa13;
+        body {
+            background: #f5f7f2;
+            color: #263b28;
+        }
+
+        /* HEADER */
+        header {
+            background: #16823b;
             color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        /* Banner Promo */
-        .promo-banner {
-            background-color: #e8fceb;
-            color: #00aa13;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            border-bottom: 1px solid #d4ebd7;
-        }
-
-        /* Daftar Menu */
-        .menu-list {
-            padding: 20px;
-        }
-        .menu-item {
+            padding: 18px 7%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eeeeee;
-        }
-        .menu-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 16px;
-            color: #333;
-        }
-        .menu-info p {
-            margin: 0;
-            font-size: 14px;
-            color: #777;
-        }
-        .menu-price {
-            font-weight: bold;
-            color: #333;
-            margin-top: 5px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        /* Tombol Tambah */
-        .add-btn {
-            background-color: white;
-            color: #00aa13;
-            border: 1px solid #00aa13;
-            padding: 5px 15px;
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #d9f99d;
+        }
+
+        .cart {
+            background: white;
+            color: #16823b;
+            padding: 10px 15px;
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
-        }
-        .add-btn:hover {
-            background-color: #00aa13;
-            color: white;
         }
 
-        /* Tombol Keranjang (Bottom Bar) */
-        .cart-bar {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 480px;
-            background-color: #00aa13;
+        /* CONTAINER */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #dff5d0, #b9e6a2);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .hero-text {
+            max-width: 550px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            margin-bottom: 20px;
+            color: #49614b;
+        }
+
+        .btn {
+            background: #16823b;
             color: white;
+            border: none;
+            padding: 13px 22px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #10662e;
+        }
+
+        .matcha-icon {
+            font-size: 110px;
+        }
+
+        /* SEARCH */
+        .search {
+            width: 100%;
             padding: 15px 20px;
-            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        /* CATEGORY */
+        .categories {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            min-width: 100px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .category:hover {
+            background: #e4f6dc;
+        }
+
+        .category-icon {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        /* PRODUCTS */
+        .section-title {
+            margin-bottom: 18px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            transition: 0.2s;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 170px;
+            background: #dcefd2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            margin-bottom: 7px;
+        }
+
+        .description {
+            color: #777;
+            font-size: 13px;
+            min-height: 35px;
+        }
+
+        .price {
+            color: #16823b;
+            font-weight: bold;
+            margin: 12px 0;
+            font-size: 17px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #16823b;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #10662e;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 50px;
+            background: #143d22;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* MODAL KERANJANG */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 25px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            display: none; /* Sembunyikan jika kosong */
+            margin-bottom: 20px;
         }
+
+        .close {
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .checkout {
+            width: 100%;
+            padding: 14px;
+            background: #16823b;
+            border: none;
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .matcha-icon {
+                font-size: 70px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .products {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .hero {
+                padding: 20px;
+            }
+
+            .hero-text {
+                max-width: 70%;
+            }
+
+            .product-image {
+                height: 130px;
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Matcha<span>Go</span> 🍵</div>
+
+    <div class="cart" onclick="openCart()">
+        🛒 Keranjang (<span id="cart-count">0</span>)
+    </div>
+</header>
+
+
+<main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Matcha Favoritmu, Sampai Depan Pintu! 🍵</h1>
+            <p>
+                Nikmati berbagai minuman matcha premium,
+                segar dan dibuat khusus untuk kamu.
+            </p>
+
+            <button class="btn" onclick="scrollToProducts()">
+                Pesan Sekarang
+            </button>
+        </div>
+
+        <div class="matcha-icon">
+            🍵
+        </div>
+    </section>
+
+
+    <!-- SEARCH -->
+    <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="🔍 Cari matcha favoritmu..."
+        onkeyup="searchProduct()"
+    >
+
+
+    <!-- CATEGORY -->
+    <h2 class="section-title">Kategori</h2>
+
+    <div class="categories">
+
+        <div class="category" onclick="filterCategory('all')">
+            <div class="category-icon">🍵</div>
+            Semua
+        </div>
+
+        <div class="category" onclick="filterCategory('latte')">
+            <div class="category-icon">🥛</div>
+            Matcha Latte
+        </div>
+
+        <div class="category" onclick="filterCategory('ice')">
+            <div class="category-icon">🧊</div>
+            Iced Matcha
+        </div>
+
+        <div class="category" onclick="filterCategory('dessert')">
+            <div class="category-icon">🍰</div>
+            Dessert
+        </div>
+
+        <div class="category" onclick="filterCategory('premium')">
+            <div class="category-icon">⭐</div>
+            Premium
+        </div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+    <h2 class="section-title" id="produk">Matcha Terlaris 🔥</h2>
+
+    <div class="products" id="product-list">
+
+        <div class="product" data-category="latte" data-name="Matcha Latte Original">
+            <div class="product-image">🍵</div>
+
+            <div class="product-info">
+                <h3>Matcha Latte Original</h3>
+
+                <p class="description">
+                    Matcha Jepang dengan susu creamy.
+                </p>
+
+                <div class="price">Rp18.000</div>
+
+                <button
+                    class="add-btn"
+                    onclick="addToCart('Matcha Latte Original', 18000)"
+                >
+                    + Tambah
+                </button>
+            </div>
+        </div>
+
+
+        <div class="product" data-category="ice" data-name="Iced Matcha">
+            <div class="product-image">🧊</div>
+
+            <div class="product-info">
+                <h3>Iced Matcha</h3>
+
+                <p class="description">
+                    Matcha dingin yang fresh dan creamy.
+                </p>
+
+                <div class="price">Rp20.000</div>
+
+                <button
+                    class="add-btn"
+                    onclick="addToCart('Iced Matcha', 20000)"
+                >
+                    + Tambah
+                </button>
+            </div>
+        </div>
+
+
+        <div class="product" data-category="premium" data-name="Premium Matcha">
+            <div class="product-image">🍵</div>
+
+            <div class="product-info">
+                <h3>Premium Matcha</h3>
+
+                <p class="description">
+                    Matcha premium dengan rasa umami.
+                </p>
+
+                <div class="price">Rp28.000</div>
+
+                <button
+                    class="add-btn"
+                    onclick="addToCart('Premium Matcha', 28000)"
+                >
+                    + Tambah
+                </button>
+            </div>
+        </div>
+
+
+        <div class="product" data-category="dessert" data-name="Matcha Cake">
+            <div class="product-image">🍰</div>
+
+            <div class="product-info">
+                <h3>Matcha Cake</h3>
+
+                <p class="description">
+                    Cake lembut dengan cream matcha.
+                </p>
+
+                <div class="price">Rp25.000</div>
+
+                <button
+                    class="add-btn"
+                    onclick="addToCart('Matcha Cake', 25000)"
+                >
+                    + Tambah
+                </button>
+            </div>
+        </div>
+
+
+        <div class="product" data-category="latte" data-name="Strawberry Matcha">
+            <div class="product-image">🍓</div>
+
+            <div class="product-info">
+                <h3>Strawberry Matcha</h3>
+
+                <p class="description">
+                    Perpaduan strawberry dan matcha.
+                </p>
+
+                <div class="price">Rp23.000</div>
+
+                <button
+                    class="add-btn"
+                    onclick="addToCart('Strawberry Matcha', 23000)"
+                >
+                    + Tambah
+                </button>
+            </div>
+        </div>
+
+
+        <div class="product" data-category="ice" data-name="Matcha Lemon">
+            <div class="product-image">🍋</div>
+
+            <div class="product-info">
+                <h3>Matcha Lemon</h3>
+
+                <p class="description">
+                    Matcha segar dengan lemon.
+                </p>
+
+                <div class="price">Rp21.000</div>
+
+                <button
+                    class="add-btn"
+                    onclick="addToCart('Matcha Lemon', 21000)"
+                >
+                    + Tambah
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+    <h3>MatchaGo 🍵</h3>
+    <p>Matcha enak, pesan mudah, langsung sampai.</p>
+    <br>
+    <p>© 2026 MatchaGo</p>
+</footer>
+
+
+<!-- MODAL CART -->
+<div class="modal" id="cart-modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>🛒 Keranjang</h2>
+
+            <span class="close" onclick="closeCart()">
+                ×
+            </span>
+        </div>
+
+        <div id="cart-items">
+            <p>Keranjang masih kosong.</p>
+        </div>
+
+        <div class="total">
+            Total: Rp<span id="cart-total">0</span>
+        </div>
+
+        <button class="checkout" onclick="checkout()">
+            Pesan Sekarang
+        </button>
+
+    </div>
+</div>
+
+
+<script>
+
+    // DATA KERANJANG
+    let cart = [];
+    let total = 0;
+
+
+    // TAMBAH PRODUK
+    function addToCart(name, price) {
+
+        cart.push({
+            name: name,
+            price: price
+        });
+
+        total += price;
+
+        updateCart();
+
+        alert(name + " berhasil ditambahkan ke keranjang!");
+    }
+
+
+    // UPDATE KERANJANG
+    function updateCart() {
+
+        document.getElementById("cart-count").innerText = cart.length;
+
+        document.getElementById("cart-total").innerText =
+            total.toLocaleString("id-ID");
+
+        const cartItems =
+            document.getElementById("cart-items");
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML =
+                "<p>Keranjang masih kosong.</p>";
+
+            return;
+        }
+
+
+        cartItems.innerHTML = "";
+
+        cart.forEach((item, index) => {
+
+            cartItems.innerHTML += `
+                <div class="cart-item">
+
+                    <span>
+                        ${item.name}
+                    </span>
+
+                    <span>
+                        Rp${item.price.toLocaleString("id-ID")}
+                        <button
+                            onclick="removeItem(${index})"
+                            style="
+                                margin-left:8px;
+                                border:none;
+                                background:#ffdddd;
+                                color:red;
+                                border-radius:5px;
+                                cursor:pointer;
+                            "
+                        >
+                            ×
+                        </button>
+                    </span>
+
+                </div>
+            `;
+        });
+    }
+
+
+    // HAPUS PRODUK
+    function removeItem(index) {
+
+        total -= cart[index].price;
+
+        cart.splice(index, 1);
+
+        updateCart();
+    }
+
+
+    // BUKA KERANJANG
+    function openCart() {
+
+        document.getElementById("cart-modal").style.display =
+            "flex";
+
+        updateCart();
+    }
+
+
+    // TUTUP KERANJANG
+    function closeCart() {
+
+        document.getElementById("cart-modal").style.display =
+            "none";
+    }
+
+
+    // CHECKOUT
+    function checkout() {
+
+        if (cart.length === 0) {
+
+            alert("Keranjang kamu masih kosong!");
+
+            return;
+        }
+
+        alert(
+            "Pesanan berhasil dibuat! 🍵\n\n" +
+            "Total pembayaran: Rp" +
+            total.toLocaleString("id-ID")
+        );
+
+        cart = [];
+        total = 0;
+
+        updateCart();
+
+        closeCart();
+    }
+
+
+    // SEARCH PRODUK
+    function searchProduct() {
+
+        const keyword =
+            document.getElementById("search")
+            .value
+            .toLowerCase();
+
+        const products =
+            document.querySelectorAll(".product");
+
+        products.forEach(product => {
+
+            const name =
+                product.dataset.name.toLowerCase();
+
+            if (name.includes(keyword)) {
+
+                product.style.display = "block";
+
+            } else {
+
+                product.style.display = "none";
+
+            }
+        });
+    }
+
+
+    // FILTER KATEGORI
+    function filterCategory(category) {
+
+        const products =
+            document.querySelectorAll(".product");
+
+        products.forEach(product => {
+
+            if (
+                category === "all" ||
+                product.dataset.category === category
+            ) {
+
+                product.style.display = "block";
+
+            } else {
+
+                product.style.display = "none";
+
+            }
+        });
+    }
+
+
+    // SCROLL KE PRODUK
+    function scrollToProducts() {
+
+        document
+            .getElementById("produk")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+    }
+
+</script>
+
+</body>
+</html>
